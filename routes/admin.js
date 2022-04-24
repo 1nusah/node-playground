@@ -43,4 +43,25 @@ router.delete('/product/:id', async (req, res) => {
 	}
 });
 
+router.patch('/product/:id', async (req, res) => {
+	const { id } = req.params;
+	const { body } = req.body;
+	console.log('req params', req.params);
+
+	try {
+		const nigga = await Product.findByIdAndUpdate(id, {
+			title: body.title,
+			name: body.title,
+			price: body.price,
+			picture: body.picture,
+		});
+		console.log('deleted Items', nigga);
+		res.status(200).json({ message: 'Product updated successfully' });
+	} catch (error) {
+		res.status(400).json({ message: 'Sorry that failed please try again' });
+
+		console.log('error', error);
+	}
+});
+
 module.exports = { router, products };

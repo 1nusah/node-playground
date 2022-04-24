@@ -45,13 +45,13 @@ router.delete('/product/:id', async (req, res) => {
 
 router.patch('/product/:id', async (req, res) => {
 	const { id } = req.params;
-	const { body } = req.body;
+	const { body } = req;
 	console.log('req params', req.params);
 
 	try {
 		const nigga = await Product.findByIdAndUpdate(id, {
 			title: body.title,
-			name: body.title,
+			name: body.name,
 			price: body.price,
 			picture: body.picture,
 		});
@@ -61,6 +61,17 @@ router.patch('/product/:id', async (req, res) => {
 		res.status(400).json({ message: 'Sorry that failed please try again' });
 
 		console.log('error', error);
+	}
+});
+
+router.get('/product/:id', async (req, res) => {
+	const { id } = req.params;
+	try {
+		const product = await Product.findById(id);
+		res.status(200).json(product);
+	} catch (error) {
+		console.log('error');
+		res.status(400).json({ message: 'Sorry that failed please try again' });
 	}
 });
 

@@ -8,12 +8,10 @@ require('./db');
 var bodyParser = require('body-parser');
 
 // configure the app to use bodyParser()
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
+app.use(bodyParser.urlencoded({ limit: '4mb', extended: true }));
 app.use(bodyParser.json());
+
+//individual routes
 const adminRoutes = require('./routes/admin');
 const clientRoutes = require('./routes/shop');
 

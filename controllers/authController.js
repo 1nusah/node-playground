@@ -4,7 +4,7 @@ module.exports = class AuthController {
 	signUp = async (req, res, next) => {
 		const { body } = req;
 		try {
-			const newUser = await Users.create({
+			await Users.create({
 				email: body.email,
 				password: body.password,
 			});

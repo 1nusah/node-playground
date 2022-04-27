@@ -5,12 +5,7 @@ const { addProductSchema } = require('../utils/validation');
 
 //instance of class
 const ProductControllerInstance = new ProductController();
-const router = express.Router();
-
-const products = [
-	{ title: 'Crocs', price: 300, name: 'Crocs Gen 2' },
-	{ title: 'Crocs', price: 300, name: 'Crocs Gen 2' },
-];
+const router = express.Router(['strict']);
 
 router.post(
 	'/add-product',
@@ -28,4 +23,4 @@ router.patch(
 
 router.get('/product/:id', ProductControllerInstance.getProduct);
 
-module.exports = { router, products };
+module.exports = { router };

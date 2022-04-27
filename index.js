@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -14,7 +13,7 @@ app.use(bodyParser.json());
 //individual routes
 const adminRoutes = require('./routes/admin');
 const clientRoutes = require('./routes/shop');
-
+const authRoutes = require('./routes/users');
 //req parser
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('combined'));
@@ -24,11 +23,13 @@ app.use(cors());
 
 app.use(adminRoutes.router);
 app.use(clientRoutes);
+app.use('/auth', authRoutes);
 
 //404 route
 
-app.use('/', (req, res, next) => {
-	res.status(404).json({ message: 'invalid' });
+app.use('/health', (req, res) => {
+	res.status(200).json({ message: 'Ok' });
+	// next();
 });
 
 app.listen(4040);

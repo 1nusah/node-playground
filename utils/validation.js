@@ -8,4 +8,9 @@ const addProductSchema = object({
 	price: number().required().label('Price'),
 });
 
-module.exports = { addProductSchema };
+const loginSchema = object({
+	email: string().email().required().label('Email'),
+	password: string().required().label('Password'),
+});
+
+module.exports = { addProductSchema, loginSchema };

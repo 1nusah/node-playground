@@ -1,6 +1,7 @@
 const express = require('express');
 const ProductController = require('../controllers/productsController');
 const validate = require('../middlewares/validate');
+const authenticate = require('../middlewares/authenticate');
 const { addProductSchema } = require('../utils/validation');
 
 //instance of class
@@ -9,7 +10,7 @@ const router = express.Router(['strict']);
 
 router.post(
 	'/add-product',
-	[validate(addProductSchema)],
+	[authenticate, validate(addProductSchema)],
 	ProductControllerInstance.add
 );
 

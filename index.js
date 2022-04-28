@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const logger = require('morgan');
+const { PORT } = require('./config/env');
 //file routes
 require('./db');
 var bodyParser = require('body-parser');
@@ -9,6 +10,9 @@ var bodyParser = require('body-parser');
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({ limit: '4mb', extended: true }));
 app.use(bodyParser.json());
+
+//dot env
+require('dotenv').config();
 
 //individual routes
 const adminRoutes = require('./routes/admin');
@@ -31,5 +35,4 @@ app.use('/health', (req, res) => {
 	res.status(200).json({ message: 'Ok' });
 	// next();
 });
-
-app.listen(4040);
+app.listen(PORT || 4040);

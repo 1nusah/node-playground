@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models/users');
 
-const authenticate = async (req, res, next) => {
+const authenticate = (req, res, next) => {
 	try {
 		const headerToken = req.headers.authorization ?? '';
 		const accessToken = headerToken.split(' ');
@@ -15,11 +15,10 @@ const authenticate = async (req, res, next) => {
 				accessToken[1],
 				process.env.TOKEN_SECRET,
 				async (err, payload) => {
-					console.log('payload first', payload);
+					console.log({ err, payload });
 					if (err) {
-						res
-							.status(401)
-							.status({ message: 'Unauthorized', error: err.message });
+						console.log('error', err);
+						res.status(401).json({ message: 'Unauthorized' });
 					} else {
 						const user = await Users.findById(payload._id);
 						console.log('payload', payload);
@@ -30,13 +29,15 @@ const authenticate = async (req, res, next) => {
 							};
 							next();
 						} else {
-							res.status(401).json({ message: 'Unauthorized' });
+							res
+								.status(401)
+								.json({ message: "Sorry you aren't authorized  " });
 						}
 					}
 				}
 			);
 		} else {
-			res.status(401).json({ message: 'Unauthorized' });
+			res.status(401).json({ message: 'Token note provided ' });
 		}
 	} catch (error) {
 		res.status(401).json({ message: 'Unauthorized', error: error.message });

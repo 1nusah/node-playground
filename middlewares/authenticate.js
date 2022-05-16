@@ -18,7 +18,9 @@ const authenticate = (req, res, next) => {
 					console.log({ err, payload });
 					if (err) {
 						console.log('error', err);
-						res.status(401).json({ message: 'Unauthorized' });
+						const { name, message } = err;
+						console.log({ name, message });
+						res.status(401).json({ message });
 					} else {
 						const user = await Users.findById(payload._id);
 						console.log('payload', payload);
@@ -37,7 +39,7 @@ const authenticate = (req, res, next) => {
 				}
 			);
 		} else {
-			res.status(401).json({ message: 'Token note provided ' });
+			res.status(401).json({ message: 'Token not provided ' });
 		}
 	} catch (error) {
 		res.status(401).json({ message: 'Unauthorized', error: error.message });

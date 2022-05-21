@@ -24,7 +24,6 @@ module.exports = class ProductController {
 	//delete product
 	delete = async (req, res) => {
 		const { id } = req.params;
-		console.log('req params', req.params);
 
 		try {
 			const nigga = await Product.findByIdAndDelete(id);
@@ -78,9 +77,19 @@ module.exports = class ProductController {
 
 	// show all products
 	showAllProducts = async (req, res, next) => {
+		let { page, limit } = req.query;
+		if (!page) {
+			page = 1;
+		}
+		if (!limit) {
+			limit = 1;
+		}
+		limit = parseInt(limit);
+		const offset = (page - 1) * limit;
 		try {
-			const products = await Product.find();
-			res.status(200).json({ products });
+			const products = await Product.find({}, null, { limit, skip: offset });
+			const totalNumberOfItems = await Product.countDocuments();
+			res.status(200).json({ products, total: totalNumberOfItems, page: page });
 		} catch (error) {
 			res.status(400).json(error.message);
 		}

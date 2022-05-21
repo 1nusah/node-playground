@@ -29,7 +29,6 @@ module.exports = class AuthController {
 		const user = await Users.findOne({
 			email: req.body.email,
 		});
-		console.log('users', user);
 		try {
 			const foundMatch = await bcrypt.compare(req.body.password, user.password);
 			const accessToken = jwt.sign(

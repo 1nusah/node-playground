@@ -31,7 +31,6 @@ module.exports = class ProductController {
 			res.status(200).json({ message: 'Product deleted successfully' });
 		} catch (error) {
 			res.status(400).json({ message: 'Sorry that failed please try again' });
-
 			console.log('error', error);
 		}
 	};
@@ -40,7 +39,6 @@ module.exports = class ProductController {
 	update = async (req, res) => {
 		const { id } = req.params;
 		const { body } = req;
-		console.log('req params', req.params);
 		const productExists = await Product.findById(id);
 
 		if (productExists) {
@@ -87,7 +85,7 @@ module.exports = class ProductController {
 		limit = parseInt(limit);
 		const offset = (page - 1) * limit;
 		try {
-			const products = await Product.find({}, null, { limit, skip: offset });
+			const products = await Product.find().skip(offset).limit(limit);
 			const totalNumberOfItems = await Product.countDocuments();
 			res.status(200).json({ products, total: totalNumberOfItems, page: page });
 		} catch (error) {

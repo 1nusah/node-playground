@@ -1,5 +1,4 @@
 const { Product } = require('../models/products');
-const { uploadFile } = require('../firebase/index');
 module.exports = class ProductController {
 	//add new product
 	add = async (req, res) => {

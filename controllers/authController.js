@@ -29,6 +29,9 @@ module.exports = class AuthController {
 		const user = await Users.findOne({
 			email: req.body.email,
 		});
+		if (!user) {
+			return res.status(404).json({ message: 'User does not exist' });
+		}
 		try {
 			const foundMatch = await bcrypt.compare(req.body.password, user.password);
 			const accessToken = jwt.sign(
@@ -36,15 +39,12 @@ module.exports = class AuthController {
 				process.env.TOKEN_SECRET
 			);
 
-			if (!user) {
-				res.status(404).json({
-					message: 'User does not exsit',
-				});
-			} else if (foundMatch) {
+			if (foundMatch) {
 				res.json({ accessToken, user });
 			} else {
-				res.json({ message: 'Provided credentials are invalid' });
+				res.status(400).json({ message: 'Provided credentials are invalid' });
 			}
+			console.log({ user, foundMatch });
 		} catch (error) {
 			res.status(400).json({ error });
 		}

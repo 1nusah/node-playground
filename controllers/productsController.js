@@ -1,5 +1,4 @@
 const { Product } = require('../models/products');
-
 module.exports = class ProductController {
 	//add new product
 	add = async (req, res) => {
@@ -7,24 +6,22 @@ module.exports = class ProductController {
 		console.log('data', req.body);
 
 		try {
-			const product = await Product.create({
+			await Product.create({
 				title: req.body.title,
 				name: req.body.name,
 				price: req.body.price,
 				picture: req.body.picture,
 			});
 			res.status(201).json({ message: 'Product added succesfully' });
-			console.log('product', product);
 		} catch (error) {
 			return res.status(400).json(error);
 		}
-
-		// console.log('products', products);
 	};
 	//delete product
 	delete = async (req, res) => {
 		const { id } = req.params;
-
+		if (!id) {
+		}
 		try {
 			const nigga = await Product.findByIdAndDelete(id);
 			console.log('deleted Items', nigga);
@@ -84,6 +81,7 @@ module.exports = class ProductController {
 		}
 		limit = parseInt(limit);
 		const offset = (page - 1) * limit;
+		console.log('req', req);
 		try {
 			const products = await Product.find().skip(offset).limit(limit);
 			const totalNumberOfItems = await Product.countDocuments();

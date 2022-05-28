@@ -3,7 +3,6 @@ module.exports = class ProductController {
 	//add new product
 	add = async (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
-		console.log('data', req.body);
 
 		try {
 			await Product.create({
@@ -77,7 +76,7 @@ module.exports = class ProductController {
 			page = 1;
 		}
 		if (!limit) {
-			limit = 1;
+			limit = 10;
 		}
 		limit = parseInt(limit);
 		const offset = (page - 1) * limit;

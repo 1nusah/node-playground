@@ -1,18 +1,17 @@
+//dot env
+require('dotenv').config();
+require('./db');
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const logger = require('morgan');
 const { PORT } = require('./config/env');
-//file routes
-require('./db');
 var bodyParser = require('body-parser');
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({ limit: '4mb', extended: true }));
 app.use(bodyParser.json());
-
-//dot env
-require('dotenv').config();
 
 //individual routes
 const adminRoutes = require('./routes/admin');

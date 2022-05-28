@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models/users');
+const { TOKEN_SECRET } = require('../config/env');
 module.exports = class AuthController {
 	signUp = async (req, res) => {
 		const { body } = req;
@@ -34,10 +35,7 @@ module.exports = class AuthController {
 		}
 		try {
 			const foundMatch = await bcrypt.compare(req.body.password, user.password);
-			const accessToken = jwt.sign(
-				JSON.stringify(user),
-				process.env.TOKEN_SECRET
-			);
+			const accessToken = jwt.sign(JSON.stringify(user), TOKEN_SECRET);
 
 			if (foundMatch) {
 				res.json({ accessToken, user });

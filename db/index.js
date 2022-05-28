@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-
+const { DB_URL } = require('../config/env');
 mongoose.connect(
-	'mongodb://localhost:27017/testdb',
+	DB_URL,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
@@ -13,5 +13,3 @@ mongoose.connect(
 		console.error('error', e);
 	}
 );
-
-// module.exports = connect;

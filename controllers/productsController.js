@@ -23,12 +23,10 @@ module.exports = class ProductController {
 		}
 		try {
 			const nigga = await Product.findByIdAndDelete(id);
-			console.log('deleted Items', nigga);
-			res.status(200).json({ message: 'Product deleted successfully' });
+ 			res.status(200).json({ message: 'Product deleted successfully' });
 		} catch (error) {
 			res.status(400).json({ message: 'Sorry that failed please try again' });
-			console.log('error', error);
-		}
+ 		}
 	};
 
 	//update product
@@ -49,8 +47,7 @@ module.exports = class ProductController {
 			} catch (error) {
 				res.status(400).json({ message: 'Sorry that failed please try again' });
 
-				console.log('error', error);
-			}
+ 			}
 		}
 		return res
 			.status(404)
@@ -64,8 +61,7 @@ module.exports = class ProductController {
 			const product = await Product.findById(id);
 			res.status(200).json(product);
 		} catch (error) {
-			console.log('error');
-			res.status(400).json({ message: 'Sorry that failed please try again' });
+ 			res.status(400).json({ message: 'Sorry that failed please try again' });
 		}
 	};
 
@@ -80,8 +76,7 @@ module.exports = class ProductController {
 		}
 		limit = parseInt(limit);
 		const offset = (page - 1) * limit;
-		console.log('req', req);
-		try {
+ 		try {
 			const products = await Product.find().skip(offset).limit(limit);
 			const totalNumberOfItems = await Product.countDocuments();
 			res.status(200).json({ products, total: totalNumberOfItems, page: page });

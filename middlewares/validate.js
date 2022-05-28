@@ -5,8 +5,7 @@ const validate = (schema) => (req, res, next) => {
 			next();
 		})
 		.catch((error) => {
-			console.log(error.message);
-
+ 
 			const response = {
 				message: 'The given data was invalid',
 				errors: [],

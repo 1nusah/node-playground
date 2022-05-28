@@ -42,7 +42,6 @@ module.exports = class AuthController {
 			} else {
 				res.status(400).json({ message: 'Provided credentials are invalid' });
 			}
-			console.log({ user, foundMatch });
 		} catch (error) {
 			res.status(400).json({ error });
 		}

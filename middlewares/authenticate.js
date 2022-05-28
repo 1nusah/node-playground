@@ -15,16 +15,12 @@ const authenticate = (req, res, next) => {
 				accessToken[1],
 				process.env.TOKEN_SECRET,
 				async (err, payload) => {
-					console.log({ err, payload });
 					if (err) {
-						console.log('error', err);
 						const { name, message } = err;
-						console.log({ name, message });
 						res.status(401).json({ message });
 					} else {
 						const user = await Users.findById(payload._id);
-						console.log('payload', payload);
-						console.log('user', user);
+
 						if (user) {
 							req.user = {
 								...user.toObject(),
